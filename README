@@ -1,0 +1,43 @@
+8PUZZLE:******************************************************************
+**************************************************************************
+
+first project using personal linux
+
+goals:
+* represents current focus
+
+*-make vs code work for this linux and project
+-create the 8puzzle game
+	-standard 8puzzzle game
+	-adjustable size (seperated height and width)
+	-possibly storing scores
+	-possibly making a visual display for the game
+	-using trees, offer the best solution to the puzzle
+-have the game run through a Makefile
+-using trees find all possible board layouts
+-perhaps figure out how to implement a touch screen
+
+
+***************************
+current thought process:
+***************************
+-use an array of size: len x wid   to represent a 2D array/the board
+-each square will have its corresponding value, the empty square will be a 0
+-constantly keep track/update the location of the '0'
+	-an 'up' input should take the '0's index + wid and swap value
+	-a 'down' '0's - wid """"""
+	-a 'right' '0's - 1
+	-a 'left' '0's + 1
+note:
+********
+not all orders of values can be solved, have the code repeat n random moves, then check if it is at least k moves away from solved
+********
+
+-solve check: keep a solved array, and compare the array each move
+ 
+
+
+
+
+
+
