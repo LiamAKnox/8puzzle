@@ -1,4 +1,3 @@
-//includes go here:
 #include <stdbool.h>
 
 struct board;

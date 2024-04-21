@@ -75,7 +75,6 @@ void destroy_board(struct board *board) {
 
 
 void play_board(struct board *board, int input) {
-    //assert(input == UP || input == DOWN || input == RIGHT || input == LEFT);
     assert(board);
     if (input == UP) {
         if (board->null_idx + board->wid < board->size) {
