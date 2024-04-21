@@ -10,8 +10,8 @@ goals:
 !-make vs code work for this linux and project
 -implement a game suite to play the 8puzzle and take inputs
 *-create the 8puzzle game
-	*-standard 8puzzzle game
-	*-adjustable size (seperated height and width)
+	!-standard 8puzzzle game
+	!-adjustable size (seperated height and width)
 	-possibly storing scores
 	-possibly making a visual display for the game
 	-using trees, offer the best solution to the puzzle

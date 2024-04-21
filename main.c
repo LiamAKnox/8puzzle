@@ -19,13 +19,15 @@ int main(void) {
     print_board(board);
     refresh();
     noecho();
-    while ((ch = getch()) != '\n') {
+    while ((ch = getch()) != '\n' && !is_solved(board)) {
         clear();
         play_board(board, ch);
         print_board(board);
         refresh();
         
     }
+
+    //printf("CONGRATULATIONS!!! YOU SOLVED THE PUZZLE");
     destroy_board(board);
 
     endwin();

@@ -1,8 +1,8 @@
 #include "8puzzle.h"
-#include <stdbool.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
 
 const int UP = 65;
 const int DOWN = 66;
@@ -34,6 +34,14 @@ struct board *board_init(int len, int wid) {
     for (int i = 0; i < new_board->size - 1; i++) {
         *(new_board->layout + i) = i + 1;
     }
+    srand(time(NULL));
+    for (int i = 0; i < 180; i++) {
+        int scramble = (rand() % 4) + UP;
+        play_board(new_board, scramble);
+    }
+
+
+
     return new_board;
 }
 
