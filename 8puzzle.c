@@ -1,8 +1,14 @@
 #include "8puzzle.h"
 #include <stdbool.h>
-#include <stdio.h>
+#include <ncurses.h>
 #include <stdlib.h>
 #include <assert.h>
+
+const int UP = 65;
+const int DOWN = 66;
+const int RIGHT = 67;
+const int LEFT = 68;
+
 
 struct board {
     int *layout;
@@ -46,13 +52,14 @@ bool is_solved(struct board *board) {
 
 void print_board(struct board *board) {
     assert(board);
+
     for (int i = 0; i < board->len; i++) {
         for (int j = 0; j < board->wid; j++) {
-            printf("  %d  ", *(board->layout + (i * board->wid + j)));
+            printw("  %d  ", *(board->layout + (i * board->wid + j)));
         }
-        printf("\n");
+        printw("\n");
     }
-    printf("\n\n");
+    printw("\n\n");
 }
 
 
@@ -66,3 +73,38 @@ void destroy_board(struct board *board) {
     board = NULL;
 }
 
+
+void play_board(struct board *board, int input) {
+    //assert(input == UP || input == DOWN || input == RIGHT || input == LEFT);
+    assert(board);
+    if (input == UP) {
+        if (board->null_idx + board->wid < board->size) {
+            board->moves++;
+            *(board->layout + board->null_idx) = *(board->layout + board->null_idx + board->wid);
+            board->null_idx += board->wid;
+            *(board->layout + board->null_idx) = 0;
+        }
+    } else if (input == DOWN) {//maybe make this more efficient, it is literally just the UP, but replaced two '+' with '-'
+        if (board->null_idx - board->wid >= 0) {
+            board->moves++;
+            *(board->layout + board->null_idx) = *(board->layout + board->null_idx - board->wid);
+            board->null_idx -= board->wid;
+            *(board->layout + board->null_idx) = 0;
+        }
+    } else if (input == LEFT) {
+        if ((board->null_idx + 1) % board->wid != 0) {
+            board->moves++;
+            *(board->layout + board->null_idx) = *(board->layout + board->null_idx + 1);
+            board->null_idx++;
+            *(board->layout + board->null_idx) = 0;
+        }
+
+    } else if (input == RIGHT) {
+        if (board->null_idx % board->wid != 0) {
+            board->moves++;
+            *(board->layout + board->null_idx) = *(board->layout + board->null_idx - 1);
+            board->null_idx--;
+            *(board->layout + board->null_idx) = 0;
+        }
+    }
+}

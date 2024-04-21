@@ -12,11 +12,10 @@ struct board *board_init(int len, int wid);
 
 
 //is_solved(board) returns true if the given 8puzzle board is solved, and false otherwise
-//requires: board must be a valid board struct
 bool is_solved(struct board *board);
 
 //print_board(board) prints the given board in a visually intuitive way
-//effects: writes to ouput
+//effects: writes to windown
 void print_board(struct board *board);
 
 
@@ -24,4 +23,7 @@ void print_board(struct board *board);
 //effects: invalidates *board
 void destroy_board(struct board *board);
 
-//play_board(board, )
+//play_board(board, input) will update the board based on the move attempted by the player
+//effects: mutates *board
+//requires: input must be an arrow key (A, B, C, D)
+void play_board(struct board *board, int input);
