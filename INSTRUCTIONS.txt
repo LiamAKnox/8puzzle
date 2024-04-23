@@ -1,0 +1,54 @@
+********************8PUZZLE****************************
+*******************************************************
+
+
+After running program, you will be prompted for the desired height and width of the board
+This program currently only supports sizes of 2-12 tiles. If you wish to leave the program at
+any time, pressing the enter button will let you leave.
+
+Following this, the program will show you a board, and accept arrow key inputs to shift the tiles
+each arrow key corresponds to its direction, sliding the tile adjacent to the '0' in the arrow's direction
+ex.
+the up arrow would move the 7 up:
+---------------------               ---------------------
+|   2  |   4  |   3  |              |   2  |   4  |   3  |
+---------------------               ---------------------        
+|   5  |   0  |   6  |    -->       |   5  |   7  |   6  |
+---------------------               ---------------------
+|   1  |   7  |   8  |              |   1  |   0  |   8  |
+---------------------               ---------------------
+
+your goal is to arrange these numbers in ascending order, with the '0' in the bottom right corner:
+ex. the solution to the 3 x 3 board
+---------------------
+|   1  |   2  |   3  |
+---------------------
+|   4  |   5  |   6  |
+---------------------
+|   7  |   8  |   0  |
+---------------------
+
+
+One feature offered by the program is calculating how many moves are required to efficiently solve the
+given puzzle. Currently, because of memory requirements, this feature is only for 3 x 3 board or smaller,
+and may still halt the program. If it takes more than a few second to accept inputs, end the program by 
+clicking ctrl + c. 
+ex.
+---------------------
+|   1  |   2  |   3  |
+---------------------
+|   4  |   5  |   6  |
+---------------------
+|   7  |   8  |   0  |
+---------------------
+
+moves used: 26
+moves needed: 12
+
+
+The program is currently still in progress, so updates to the github repository will be happening
+frequently. It is reccomended that you check this document after each update for any new features,
+requirements, or changes.
+
+
+Please Enjoy!!
