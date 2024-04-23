@@ -36,6 +36,7 @@ int main(void) {
     char input;
     int len =3;
     int wid = 3;
+    int shift_cnt = 2000;
     int moves_needed;
     bool calc_moves;
     char size[3] = {'0', '\0', '\0'};
@@ -85,6 +86,7 @@ int main(void) {
         clear();
         if (*size == 'Y') {
             calc_moves = TRUE;
+            shift_cnt = 60;
             break;
         } else if (*size == 'N') {
             calc_moves = FALSE;
@@ -97,7 +99,7 @@ int main(void) {
 
 
     //initializes the board and prints the starting board
-    struct board *board = board_init(len, wid);
+    struct board *board = board_init(len, wid, shift_cnt);
     printf("%d\n", board_to_int(board));
     print_board(board);
     refresh();

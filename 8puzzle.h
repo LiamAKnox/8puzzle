@@ -10,10 +10,11 @@ struct board;
 
 
 //board_init(len, wid): creates a board struct for the 8puzzle with the given height and width
+//applies shift_cnt random moves to make the board randomized
 //max size is 12 x 12
 //effects: allocates data [client must call destroy_board]
 //requires: len and wid > 0
-struct board *board_init(int len, int wid);
+struct board *board_init(int len, int wid, int shift_cnt);
 
 
 //board_clone(board) will create a duplicate of *board

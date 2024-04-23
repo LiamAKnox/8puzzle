@@ -21,7 +21,7 @@ struct board {
 
 
 
-struct board *board_init(int len, int wid) {
+struct board *board_init(int len, int wid, int shift_cnt) {
     assert(len > 1 && wid > 1);
     assert(len < 13 && wid < 13);
     struct board *new_board = malloc(sizeof(struct board));
@@ -38,7 +38,7 @@ struct board *board_init(int len, int wid) {
         *(new_board->layout + i) = i + 1;
     }
     srand(time(NULL));
-    for (int i = 0; i < 90; i++) {
+    for (int i = 0; i < shift_cnt; i++) {
         int scramble = (rand() % 4) + UP;
         play_board(new_board, scramble);
     }
