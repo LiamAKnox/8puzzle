@@ -33,6 +33,7 @@ void ensure_arrow(struct board *board) {
 
 
 int main(void) {
+    
     char input;
     int len =3;
     int wid = 3;
@@ -44,7 +45,7 @@ int main(void) {
     struct queue *prev = queue_init(sizeof(int *));
 
     //allowing more memory for use in brute_solve
-    struct rlimit the_limit = { RLIM_INFINITY, RLIM_INFINITY};
+    struct rlimit the_limit = {RLIM_INFINITY, RLIM_INFINITY};
     if (-1 == setrlimit(RLIMIT_AS, &the_limit)) {
     perror("setrlimit failed");
     }
@@ -61,6 +62,9 @@ int main(void) {
         clear();
         if (len > 1 && len < 13) {
             break;
+        } else if (*size == 0) {
+            endwin();
+            exit(0);
         }
         printw("not a valid input: (must be between 2 - 12)\n");
     }
@@ -74,6 +78,9 @@ int main(void) {
         clear();
         if (wid > 1 && wid < 13) {
             break;
+        } else if (*size == 0) {
+            endwin();
+            exit(0);
         }
         printw("not a valid input: (must be between 2 - 12)\n");
     }
@@ -86,11 +93,14 @@ int main(void) {
         clear();
         if (*size == 'Y') {
             calc_moves = TRUE;
-            shift_cnt = 60;
+            shift_cnt = 90;
             break;
         } else if (*size == 'N') {
             calc_moves = FALSE;
             break;
+        } else if (*size == 0) {
+            endwin();
+            exit(0);
         }
         printw("PLEASE ENTER Y or N (capitalised)\n");
     }
@@ -107,16 +117,22 @@ int main(void) {
 
     if (calc_moves) {
         moves_needed = brute_solve(board_clone(board), q, prev);
+    } else {
+        queue_destroy(q, &destroy_board);
+        queue_destroy(prev, &null_destroy);
     }
 
     //repeatedly asks for player's next move until solved or exits('\n')
     ensure_arrow(board);
     
-    while ((input = getch()) != '\n' && !is_solved(board)) {
+    while ((input = getch()) != '\n') {
         clear();
         play_board(board, input);
         print_board(board);
         refresh();
+        if (is_solved(board)) {
+            break;
+        }
         ensure_arrow(board);
     }
     
@@ -136,4 +152,5 @@ int main(void) {
     printw("Press any key to exit\n");
     getch();
     endwin();//ends ncurses
+    
 }

@@ -8,7 +8,7 @@ the program will prompt you to decide if you want to calculate the efficient num
 for the board, more is written about this feature below.
 
 Following this, the program will show you a board, and accept arrow key inputs to shift the tiles
-each arrow key corresponds to its direction, sliding the tile adjacent to the '0' in the arrow's direction
+each arrow key corresponds to its direction, sliding the tile adjacent to the '0' in the arrow's direction.
 ex.
 the up arrow would move the 7 up:
 ---------------------               ---------------------
@@ -32,10 +32,10 @@ ex. the solution to the 3 x 3 board
 
 One feature offered by the program is calculating how many moves are required to efficiently solve the
 given puzzle. Currently, because of memory requirements, this feature is only for 3 x 3 board or smaller,
-and may still halt the program. If it takes more than a few second to accept inputs, end the program by 
-clicking ctrl + c. If you notice a discrepency in the randomness of boards when using and not using
-this function, you are not crazy. The program attempts to make the board less shuffled to reduced the
-risk of the program halting.
+and may still halt the program. If it takes more than a few second to accept arrow key inputs, end the
+program by clicking ctrl + c. If you notice a discrepency in the randomness of boards when using and not 
+using this function, you are not crazy. The program attempts to make the board less shuffled to reduced 
+the risk of the program halting.
 ex.
 ---------------------
 |   1  |   2  |   3  |
