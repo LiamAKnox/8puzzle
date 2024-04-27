@@ -16,7 +16,7 @@ goals:
 	!-possibly making a visual display for the game
 	!-offer the best solution to the puzzle
 -have the game run through a Makefile
--find all possible board layouts
+!find all possible board layouts
 -perhaps figure out how to implement a touch screen
 
 

@@ -2,9 +2,14 @@
 *******************************************************
 
 
-After running program, you will be prompted for the desired height and width of the board
-This program currently only supports sizes of 2-12 tiles. If the board is 3 x 3 or less,
+After running program, you will have the options to calculate solvable permutations or play 
+the 8-puzzle. If you choose the first, it will calculate and display how many new boards are
+created for each extra move in a bar graph, as well as the total number of permutations.
+
+if you chose the second, you will be prompted for the desired height and width of the board
+This program currently only supports sizes of 3-11 tiles. If the board is 3 x 3,
 the program will prompt you to decide if you want to calculate the efficient number of moves
+and which search algorithm you want to use (currently only Breadth First Search works)
 for the board, more is written about this feature below.
 
 Following this, the program will show you a board, and accept arrow key inputs to shift the tiles
@@ -31,12 +36,12 @@ ex. the solution to the 3 x 3 board
 
 
 One feature offered by the program is calculating how many moves are required to efficiently solve the
-given puzzle. Currently, because of memory requirements, this feature is only for 3 x 3 board or smaller,
-and may still halt the program. If it takes more than a few second to accept arrow key inputs, end the
-program by clicking ctrl + c. If you notice a discrepency in the randomness of boards when using and not 
-using this function, you are not crazy. The program attempts to make the board less shuffled to reduced 
-the risk of the program halting.
-ex.
+given puzzle. You are prompted with 3 search algorithms, Breadth First Search, A* Search, and Iterative
+Deepening Search. Breadth First Search is currently the only algorithm implemented, and because of memory 
+and time requirements, this is only offered for 3 x 3 boards. This information is shared after solving a 
+board under the "moves needed" heading. If you have solved the board and the code seems to have freezed, 
+do not fear, it is simply calculating the number of moves and will display it when it is done.
+ex. after solving a 3 x 3 board
 ---------------------
 |   1  |   2  |   3  |
 ---------------------
