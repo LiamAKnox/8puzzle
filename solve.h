@@ -1,6 +1,7 @@
 #include "queueADT.h"
 #include <stdbool.h>
 
+struct heuristic;
 
 
 //add_new(q, next_q, layout, direction, deep, min) attempts to apply the 'direction' move onto layout
@@ -15,14 +16,46 @@ bool add_new(struct queue *q, struct queue *next_q, int layout, int direction, i
 //effects: prints to window
 void permutation_calc(char min, char max, int layout, int cur, int next, char deep,  struct queue *q);
 
-//board_comp(board1, board2) compares two board structures, and returns 0 if they are the 
-//same permutation and 1 otherwise
-//requires: boards must have the same dimensions
-int board_comp(void *board1, void *board2);
-
 
 //brute_solve(layout, cur, next, deep, q) will find the shortest solution to a given board
 //returns the number of moves required
 //requires: board must be 3 x 3
 //effects: allocates memory [no need to free]
 int brute_solve(int layout, int cur, int next, char deep,  struct queue *q);
+
+int deepening_solve(int layout);
+
+bool DFS_maxed(int layout, char deep, char max_deep, char prev);
+
+/*
+A*:
+list based search algorithm where list is sorted based on heuristics(distance away from solved + moves already taken)
+loops looking at the first in the sorted list applying the all new board making moves and adding these new board into the list 
+
+the heuristic:
+    moves is obvious
+    distance from solved:
+        -simply the number of tiles not in the right place
+        -or maybe add the distance of each tile from its correct placement (ignoring '0's placement)
+
+
+*/
+int A_star(int *layouts, int *heuristics);
+
+/*
+//match_sort(sort, follow) sorts both *follow and *sort in ascending order of the elements in *sort
+//ex. sort = {2, 3, 1}    follow = {12, 16, 41}   -> sort = {1, 2, 3}   follow = {41, 12, 16}
+//requires: *sort and *follow must have the same length
+void match_sort(int sort, struct heuristic *follow);
+
+void match_merge(int *sort, const int *src1, const struct heuristic *follow1, int len1,
+                struct heuristic *follow, const int *src2, const struct heuristic *follow2, int len2);
+
+
+*/
+
+int heuristic_calc(int layout);
+
+
+
+void linked_array_add(int *arr1, int layout, struct heuristic *arr2, int new_heuristic, int len);

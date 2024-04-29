@@ -40,3 +40,4 @@ void queue_cat(struct queue *dest, struct queue *add);
 
 //queue_clone(q) creates and returns a duplicate of *q
 struct queue *queue_clone(struct queue *q);
+

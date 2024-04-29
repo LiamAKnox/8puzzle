@@ -82,7 +82,11 @@ int main(void) {
     char size[3] = {'0', '\0', '\0'};
     struct queue *q = queue_init();
     int fd[2];
-    
+    /*
+struct board *board = board_init(len, wid, 2000);
+    int layout1 = board_to_int(board);
+    printf("%d", deepening_solve(layout1));
+*/
 
 
     //start ncurses:
@@ -93,10 +97,13 @@ int main(void) {
     wrefresh(menu);
     keypad(menu, true);
 
-    char *choices[3] = {"1. CALCULATE SOLVABLE PERMUTATIONS", "2. PLAY 8PUZZLE", "3. EXIT"};
-    int choice = create_menu(choices, 3, 0);
 
-    if (choice == 0) {//1. CALCULATE SOLVABLE PERMUTATIONS
+
+    
+    char *choices[4] = {"1. PLAY 8PUZZLE", "2. CALCULATE SOLVABLE PERMUTATIONS", "3. INSTRUCTIONS", "4. EXIT"};
+    int choice = create_menu(choices, 4, 0);
+
+    if (choice == 1) {//2. CALCULATE SOLVABLE PERMUTATIONS
         struct board *board = board_init(3, 3, 0);
         int layout1 = board_to_int(board);
         permutation_calc(0, 31, layout1, 1, 0, 0, q);
@@ -106,12 +113,14 @@ int main(void) {
         queue_destroy(q);
         endwin();
         return 0;
-    } else if (choice == 2) {//3. EXIT
+    } else if (choice == 2) {//3. INSTRUCTIONS
+        //do something here (preferably slideable pages of the INSTRUCTIONS.txt file)
+    } else if (choice == 3) {//4. EXIT
         endwin();
         queue_destroy(q);
         return 0;
     }
-    //2. PLAY 8PUZZLE
+    //1. PLAY 8PUZZLE
     clear();
 
 
@@ -179,7 +188,7 @@ int main(void) {
             } else if (method == 1) {
                 //A* method
             } else if (method == 2) {
-                //Iterative Deepening
+                moves_needed = deepening_solve(layout1);
             }
             close(fd[0]);
             write(fd[1], &moves_needed, sizeof(int));
