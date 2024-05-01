@@ -15,10 +15,14 @@
 
 //currently to run: clang main.c ~/CSWORK/8puzzle-1/8puzzle.c ~/CSWORK/8puzzle-1/queueADT.c ~/CSWORK/8puzzle-1/solve.c ~/CSWORK/8puzzle-1/Astar_list.c -lncurses 
 //replace the ~/CSWORK/8puzzle-1/ with the location of the files
+//you might need to download ncurses:
+//to do so type: sudo apt-get install libncurses5-dev libncursesw5-dev
 //then: ./a.out
 
-//TODO: - implement improved UI (update instructions)
-//      - keep track of previous games with a file  
+
+
+//TODO: - update instructions
+//      - keep track of previous games with a file  (include in UI)
 //      - include guards and Makefile
 
 
@@ -44,7 +48,7 @@ void ensure_arrow(struct board *board) {
 //requires: num_choices and start_y > 0, choices must have length of num_choices
 int create_menu(char **choices, int num_choices, int start_y) {
     assert(num_choices > 0);
-    assert(start_y > 0);
+    assert(start_y >= 0);
     assert(choices);
 
     WINDOW *menu = newwin(num_choices + 2, 40, start_y, 0);
@@ -328,9 +332,46 @@ int main(void) {
             refresh();
 
         } else if (choice == 2) {//3. INSTRUCTIONS
+            FILE *fptr;
+            int page = 0;
+            fptr = fopen("INSTRUCTIONS.txt", "r");
+            char page1[2000] = {""};
+            char page2[2000] = {""};
+            char line[200];
 
+            for (int i = 0; i < 35; i++) {
+                fgets(line, 200, fptr);
+                strcat(page1, line);
+            }
+            for (int i = 0; i < 40; i++) {
+                if (fgets(line, 200, fptr)) {
+                    strcat(page2, line);
+                }
+            }
+            char *pages[2] = {page1, page2};
+            while (true) {
+                int input;
+                printw("%s", pages[page]);
+                WINDOW *pg_num = newwin(1, 5, 39, 30);
+                keypad(pg_num, true);
+                mvwprintw(pg_num, 0, 0, "< ");
+                mvwprintw(pg_num, 0, 2, "%d", page + 1);
+                mvwprintw(pg_num, 0, 3, " >");
+                refresh();
+                wrefresh(pg_num);
+                input = wgetch(pg_num);
+                clear();
 
-
+                if (input == KEY_RIGHT && page < 1) {
+                    page++;
+                } else if (input == KEY_LEFT && page > 0) {
+                    page--;
+                } else if (input == 10) {
+                    clear();
+                    refresh();
+                    break;
+                }
+            }
 
         } else {//4. EXIT
             endwin();

@@ -1,5 +1,5 @@
-********************8PUZZLE****************************
-*******************************************************
+*******************************************8PUZZLE********************************************
+**********************************************************************************************
 
 
 After running program, you will have the options to calculate solvable permutations or play 
@@ -55,7 +55,7 @@ moves needed: 12
 
 If you wish to leave the program at any time, pressing the enter button will let you leave.
 The program is currently still in progress, so updates to the github repository will be happening
-frequently. It is reccomended that you check this document after each update for any new features,
+frequently. It is recommended that you check this document after each update for any new features,
 requirements, or changes.
 
 
