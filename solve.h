@@ -18,40 +18,30 @@ void permutation_calc(char min, char max, int layout, int cur, int next, char de
 
 
 //brute_solve(layout, cur, next, deep, q) will find the shortest solution to a given board
-//returns the number of moves required
+//returns the number of moves required, using a BFS 
 //requires: board must be 3 x 3
 //effects: allocates memory [no need to free]
 int brute_solve(int layout, int cur, int next, char deep,  struct queue *q);
 
+
+//deepening_solve(layout) returns the fewest number of moves to solve a 3x3 board
+//implements a DFS that has a maxed depth, if the DFS fails to find a solution,
+//the max depth will increase and the DFS repeats until a solution is found
 int deepening_solve(int layout);
 
+//DFS_maxed(layout, deep, max_deep, prev) returns true if a solution to a 3x3 board 
+//is possible in max_deep many moves or less using a DFS
 bool DFS_maxed(int layout, char deep, char max_deep, char prev);
 
-/*
-A*:
-list based search algorithm where list is sorted based on heuristics(distance away from solved + moves already taken)
-loops looking at the first in the sorted list applying the all new board making moves and adding these new board into the list 
 
-the heuristic:
-    moves is obvious
-    distance from solved:
-        -simply the number of tiles not in the right place
-        -or maybe add the distance of each tile from its correct placement (ignoring '0's placement)
-
-
-*/
+//A_star(layout) takes a 3x3 board and solves for the efficient
+//A* search uses a list of nodes, each with information on the number of moves applied to a node's board
+//and a heuristic value of how close a board is to being solved
+//it iteratively finds the node with the smallest sum of the above two values, and creates and adds all 
+//children nodes to the list until it finds a solution then returns the number of moves required to get there
+//requires: layout must represent a 3x3 board
 int A_star(int layout);
 
-/*
-//match_sort(sort, follow) sorts both *follow and *sort in ascending order of the elements in *sort
-//ex. sort = {2, 3, 1}    follow = {12, 16, 41}   -> sort = {1, 2, 3}   follow = {41, 12, 16}
-//requires: *sort and *follow must have the same length
-void match_sort(int sort, struct heuristic *follow);
-
-void match_merge(int *sort, const int *src1, const struct heuristic *follow1, int len1,
-                struct heuristic *follow, const int *src2, const struct heuristic *follow2, int len2);
-
-
-*/
-
+//heuristic_calc(layout) finds the heuristic value of a board used in the A_star search
+//it is the sum of all tiles' manhattan distances from their solved position
 int heuristic_calc(int layout);

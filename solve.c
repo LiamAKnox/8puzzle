@@ -150,7 +150,7 @@ bool DFS_maxed(int layout, char deep, char max_deep, char prev) {
     return false;
 }
 
-//things to fix: you forgot to have the 'closed list' and fix the stupid free problem (though maybe [who knows why but] closed list will fix it)
+
 int A_star(int layout) {
 
     if (layout == 123456780) {
@@ -179,7 +179,6 @@ int A_star(int layout) {
             //turn board into a node 
             struct Astar_node *new_node = Astar_node_init(new_layout, get_moves(cur_node) + 1, heuristic_calc(new_layout));
 
-            
             //if new node has already been checked, dont add it
             if (in_list(closed, new_node) ) {
                 free(new_node);
@@ -187,9 +186,6 @@ int A_star(int layout) {
                 free(new_node);
             }
         }
-
-        
-        //repeat this process
     }
 
 }

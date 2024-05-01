@@ -15,9 +15,8 @@ struct Astar_list {
 };
 
 
-//add, remove, search, init
 
-struct Astar_list *Astar_list_init() {
+struct Astar_list *Astar_list_init(void) {
 
     struct Astar_list *list = malloc(sizeof(struct Astar_list));
     list->len = 0;
@@ -80,8 +79,6 @@ void list_remove_idx(struct Astar_list *list, int idx) {
 }
 
 
-//in_list checks if its in list
-//even if it is in the list, if its corresponding node in the list has more moves it removes that node and returns false
 bool in_list(struct Astar_list *list, struct Astar_node *node) {
     assert(list);
     for (int i = 0; i < list->len; i++) {

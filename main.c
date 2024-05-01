@@ -38,8 +38,15 @@ void ensure_arrow(struct board *board) {
     getch();
 }
 
-
+//create_menu(choices, num_choices, star_y) creates a simple menu on a window
+//with choices as the strings on each line 
+//effects: prints to window
+//requires: num_choices and start_y > 0, choices must have length of num_choices
 int create_menu(char **choices, int num_choices, int start_y) {
+    assert(num_choices > 0);
+    assert(start_y > 0);
+    assert(choices);
+
     WINDOW *menu = newwin(num_choices + 2, 40, start_y, 0);
     box(menu, 0, 0);
 
@@ -78,8 +85,13 @@ int create_menu(char **choices, int num_choices, int start_y) {
 }
 
 
-
+//play_puzzle_UI(len, wid, alg) creates a menu to let the user decide 
+//the length width and algorithm used to calculate efficient moves
+//returns true if the user wishes to play the 8puzzle, and false if they want to quit
 bool play_puzzle_UI(int *len, int *wid, int *alg) {
+    assert(len);
+    assert(wid);
+    assert(alg);
     char *options[15] = {"", "           +", "", "           -", "",
                             "Breadth First Search", 
                             "A* Search",
