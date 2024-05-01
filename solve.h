@@ -40,7 +40,7 @@ the heuristic:
 
 
 */
-int A_star(int *layouts, int *heuristics);
+int A_star(int layout);
 
 /*
 //match_sort(sort, follow) sorts both *follow and *sort in ascending order of the elements in *sort
@@ -55,7 +55,3 @@ void match_merge(int *sort, const int *src1, const struct heuristic *follow1, in
 */
 
 int heuristic_calc(int layout);
-
-
-
-void linked_array_add(int *arr1, int layout, struct heuristic *arr2, int new_heuristic, int len);

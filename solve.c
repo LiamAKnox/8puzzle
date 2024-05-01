@@ -4,6 +4,7 @@
 
 #include "8puzzle.h"
 #include "solve.h"
+#include "Astar_list.h"
 
 struct heuristic {
     int moves;
@@ -149,112 +150,62 @@ bool DFS_maxed(int layout, char deep, char max_deep, char prev) {
     return false;
 }
 
+//things to fix: you forgot to have the 'closed list' and fix the stupid free problem (though maybe [who knows why but] closed list will fix it)
+int A_star(int layout) {
 
-int A_star(int *layouts, int *heuristics) {
-    assert(layouts);
-    assert(heuristics);
+    if (layout == 123456780) {
+        return 0;
+    }
+    struct Astar_node *origin = Astar_node_init(layout, 0, 0);
+    struct Astar_list *list = Astar_list_init();
+    struct Astar_list *closed = Astar_list_init();
+    list_add(list, origin);//adds starting node to the list
 
-    while(true) {
+    while(true) {//repeats until solved
+
+        struct Astar_node *cur_node = list_remove_smallest(list);//takes and removes node closest to completion
+        list_add(closed, cur_node);//adds this node to the closed list
+        for (int i = 0; i < 4; i++) {//this should add all new nodes
+            struct board *cur_board = int_to_3x3(get_layout(cur_node));//turns node into a board
+            play_board(cur_board, UP + i);//attempts a move on the board
+            int new_layout = board_to_int(cur_board);
+            destroy_board(cur_board);
+            if (new_layout == 123456780) {//if new board solved return moves required
+                int moves = get_moves(cur_node) + 1;
+                destroy_list(closed);
+                destroy_list(list);
+                return moves;
+            }
+            //turn board into a node 
+            struct Astar_node *new_node = Astar_node_init(new_layout, get_moves(cur_node) + 1, heuristic_calc(new_layout));
+
+            
+            //if new node has already been checked, dont add it
+            if (in_list(closed, new_node) ) {
+                free(new_node);
+            } else if (!list_add(list, new_node)) {//try adding it
+                free(new_node);
+            }
+        }
+
         
+        //repeat this process
     }
 
 }
 
 
 int heuristic_calc(int layout) {
-    int total = 0;
+    int distance = 0;
 
     for (int i = 8; i >= 0; i--) {
         int tile = (layout % 10) - 1;
-        total += abs((tile/3) - (i/3)) + abs((tile % 3) - (i % 3));//calculates moves from board tile 'i' to 'tile'
+        distance += abs((tile/3) - (i/3)) + abs((tile % 3) - (i % 3));//calculates moves from board tile 'i' to 'tile'
+        layout /= 10;
     }
-
-}
-/*
-void match_sort(int *sort, int *follow, int len) {
-    assert(sort);
-    assert(follow);
-    if (len > 1) {
-        int len_left = len / 2;
-        int len_right = len - len_left;
-        int *sort_left = malloc(len_left * sizeof(int));
-        int *follow_left = malloc(len_left * sizeof(struct heuristic));
-        int *sort_right = malloc(len_right * sizeof(int));
-        int *follow_right = malloc(len_right * sizeof(struct heuristic));
-
-        for (int i = 0; i < len_left; i++) {
-            sort_left[i] = sort[i];
-            follow_left[i] = sort[i];
-        }
-
-        for (int i = 0; i < len_left; i++) {
-            sort_right[i] = sort[i + len_left];
-            follow_right[i] = sort[i + len_left];
-        }
-
-        match_sort(sort_left, follow_left, len_left);
-        match_sort(sort_right, follow_right, len_right);
-
-
-
-        free(sort_left);
-        free(sort_right);
-        free(follow_left);
-        free(follow_right);
-
-
-
-    }
-
-
-}
-
-void match_merge(int *sort, const int *src1, const struct heuristic *follow1, int len1,
-                struct heuristic *follow, const int *src2, const struct heuristic *follow2, int len2) {
-    int pos1 = 0;
-    int pos2 = 0;
-    for (int i = 0; i < len1 + len2; i++) {
-        if (pos1 == len1 || (pos2 < len2 && src2[pos2] < src1[pos1])) {
-            sort[i] = src2[pos2];
-            follow[i] = follow2[pos2];
-            pos2++;
-        } else {
-            sort[i] = src1[pos1];
-            follow[i] = follow1[pos1];
-            pos1++;
-        }
-    }
+    return distance;
 }
 
 
 
-*/
 
-//adds layout and new_heuristic to their arrays, and returns the new len
-int linked_array_add(int *arr1, int layout, struct heuristic *arr2, struct heuristic new_heuristic, int len, int *max_len) {
-    assert(arr1);
-    assert(arr2);
-    assert(max_len);
-
-    if (len == *max_len) {
-        *max_len *=2;
-        arr1 = realloc(arr1, max_len);
-        arr2 = realloc(arr2, max_len);
-    }
-
-    *(arr1 + len) =  layout;
-    *(arr2 + len) = new_heuristic;
-    return ++len;
-}
-
-//removes values at index idx, and shifts all others down, returns new len
-int linked_array_remove(int *arr1, int *arr2, int idx, int len) {
-    assert(arr1);
-    assert(arr2);
-
-    for (int i = idx; i < len - 1; i++) {
-        *(arr1 + i) = *(arr1 + i + 1);
-        *(arr2 + i) = *(arr2 + i + 1);
-    }
-    return --len;
-}
