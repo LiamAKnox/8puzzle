@@ -5,7 +5,8 @@
 this will need to be installed in your linux terminal, to do so type: 
 sudo apt-get install libncurses5-dev libncursesw5-dev
 
-after you have this installed, simply run the program and enjoy.
+after you have this installed, simply run the program by and enjoy.
+please keep the terminal window as large as possible when you run to prevent formatting issues
  
 
 

@@ -500,7 +500,7 @@ int main(void) {
                     strcat(page2, line);
                 }
             }
-            for (int i = 0; i < 33; i++) {
+            for (int i = 0; i < 34; i++) {
                 if (fgets(line, 200, fptr)) {
                     strcat(page3, line);
                 }
@@ -517,7 +517,7 @@ int main(void) {
             while (true) {
                 int input;
                 printw("%s", pages[page]);
-                WINDOW *pg_num = newwin(1, 5, 40, 30);
+                WINDOW *pg_num = newwin(1, 5, 36, 44);
                 keypad(pg_num, true);
                 mvwprintw(pg_num, 0, 0, "< ");
                 mvwprintw(pg_num, 0, 2, "%d", page + 1);
