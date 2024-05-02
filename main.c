@@ -14,14 +14,6 @@
 
 
 
-//currently to run: clang main.c ~/CSWORK/8puzzle-1/8puzzle.c ~/CSWORK/8puzzle-1/queueADT.c ~/CSWORK/8puzzle-1/solve.c ~/CSWORK/8puzzle-1/Astar_list.c -lncurses 
-//replace the ~/CSWORK/8puzzle-1/ with the location of the files
-//you might need to download ncurses:
-//to do so type: sudo apt-get install libncurses5-dev libncursesw5-dev
-//then: ./a.out
-
-
-
 //TODO: - Makefile
 
 
@@ -220,8 +212,9 @@ bool play_puzzle_UI(int *len, int *wid, int *alg) {
     
 }
 
-
-void stat_UI() {
+//stat_UI() creates a menu for the statistics option. lets users choose height and width
+//and then data on that board size is revealed
+void stat_UI(void) {
     WINDOW *menu = newwin(5, 30, 0, 0);
 
     char *choices[3] = {"LENGTH:", "WIDTH:", "SHOW STATS"};
