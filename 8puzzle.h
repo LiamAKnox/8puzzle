@@ -1,3 +1,5 @@
+#ifndef E3E0FB17_6911_41E0_8C00_FD6BC45E2245
+#define E3E0FB17_6911_41E0_8C00_FD6BC45E2245
 #include <stdbool.h>
 
 
@@ -70,3 +72,6 @@ int board_to_int(struct board *board);
 //will be set to 0
 //effects: allocated heap memory [client must call destroy_board]
 struct board *int_to_3x3(int layout);
+
+
+#endif /* E3E0FB17_6911_41E0_8C00_FD6BC45E2245 */

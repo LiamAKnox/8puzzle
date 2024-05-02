@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "clang build file",
+			"command": "/usr/bin/clang",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"~/CSWORK/8puzzle-1/8puzzle.c",
+				"~/CSWORK/8puzzle-1/queueADT.c",
+				"~/CSWORK/8puzzle-1/solve.c",
+				"~/CSWORK/8puzzle-1/Astar_list.c",
+				"-lncurses",
+				"${file}",
+				"-std=c99",
+				"-Wall",
+				"-o",
+				"myprogram"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: /usr/bin/clang"
+		}
+	]
+}
+//clang main.c ~/CSWORK/8puzzle-1/8puzzle.c ~/CSWORK/8puzzle-1/queueADT.c ~/CSWORK/8puzzle-1/solve.c ~/CSWORK/8puzzle-1/Astar_list.c -lncurses 

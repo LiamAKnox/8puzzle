@@ -1,25 +1,11 @@
 8PUZZLE:******************************************************************
 **************************************************************************
 
-first project using personal linux
+8PUZZLE uses ncurses:
+this will need to be installed in your linux terminal, to do so type: 
+sudo apt-get install libncurses5-dev libncursesw5-dev
 
-goals:
-* represents current focus
-! represents success
-
-!-make vs code work for this linux and project
-!-implement a game suite to play the 8puzzle and take inputs
-*-create the 8puzzle game
-	!-standard 8puzzzle game
-	!-adjustable size (seperated height and width)
-	-possibly storing scores
-	!-possibly making a visual display for the game
-	!-offer the best solution to the puzzle
--have the game run through a Makefile
-!find all possible board layouts
--perhaps figure out how to implement a touch screen
-
-
+after you have this installed, simply run the program and enjoy.
  
 
 

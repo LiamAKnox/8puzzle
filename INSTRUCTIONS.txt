@@ -2,20 +2,41 @@
 **********************************************************************************************
 
 
-After running program, you will have the options to calculate solvable permutations or play 
-the 8-puzzle. If you choose the first, it will calculate and display how many new boards are
-created for each extra move in a bar graph, as well as the total number of permutations.
+After running the program, you will be presented with a window that lets you choose what you
+wish to do. You have the option to play the 8puzzle, calculate how many solvable boards there
+are on a 3 x 3 board, read the instructions - which you are currently doing -, show past
+statistics, and quit. 
 
-if you chose the second, you will be prompted for the desired height and width of the board
-This program currently only supports sizes of 3-11 tiles. If the board is 3 x 3,
-the program will prompt you to decide if you want to calculate the efficient number of moves
-and which search algorithm you want to use (currently only Breadth First Search works)
-for the board, more is written about this feature below.
+______________________________________________________________________________________________
+PLAY 8PUZZLE:
+
+If you choose to play the 8puzzle on the main menu, you will be shown a new menu that allows
+you to customize the puzzle. This menu can be navigated with the arrow keys. The up and down
+arrow keys will let scroll between the options, and by clicking the right arrow key, you can
+access each options values. After you have accessed the option you wish to change, you can use
+the up and down arrow keys to change the values. When you are done changing the value, click
+the enter button or left arrow key to return to the list of options. When you have customized
+it to your liking, you can move to the PLAY button and press enter to start. If at any time you
+wish to leave this menu, move to the BACK button and press enter. One important customizable 
+option is the ALGORITHM. This option lets you choose how the program searches for the best solution
+to the puzzle that is created. This feature is only applicable for 3 x 3 boards. Currently, the 
+program only supports height and width between 3-11.
+ex.
+--------------------------------------------------
+|1. HEIGHT:         Breadth First Search         |
+|2. WIDTH:          A* Search                    |
+|3. ALGORITHM:      Iterative Deepening Search   |
+|4. PLAY            Do Not Calculate             |
+|5. BACK                                         |
+--------------------------------------------------
+
 
 Following this, the program will show you a board, and accept arrow key inputs to shift the tiles
 each arrow key corresponds to its direction, sliding the tile adjacent to the '0' in the arrow's direction.
+At any moment you can press the enter key, and you will be returned to the main menu
+
 ex.
-the up arrow would move the 7 up:
+the up arrow would move the 7 up, swapping places with the 0:
 ---------------------               ---------------------
 |   2  |   4  |   3  |              |   2  |   4  |   3  |
 ---------------------               ---------------------        
@@ -25,6 +46,7 @@ the up arrow would move the 7 up:
 ---------------------               ---------------------
 
 your goal is to arrange these numbers in ascending order, with the '0' in the bottom right corner:
+
 ex. the solution to the 3 x 3 board
 ---------------------
 |   1  |   2  |   3  |
@@ -35,13 +57,12 @@ ex. the solution to the 3 x 3 board
 ---------------------
 
 
-One feature offered by the program is calculating how many moves are required to efficiently solve the
-given puzzle. You are prompted with 3 search algorithms, Breadth First Search, A* Search, and Iterative
-Deepening Search. Breadth First Search is currently the only algorithm implemented, and because of memory 
-and time requirements, this is only offered for 3 x 3 boards. This information is shared after solving a 
-board under the "moves needed" heading. If you have solved the board and the code seems to have freezed, 
-do not fear, it is simply calculating the number of moves and will display it when it is done.
-ex. after solving a 3 x 3 board
+After solving the puzzle, the program will display how many moves it took you to solve it, the fewest
+moves possible to solve it, and how long it took to solve the board. If these stats do not show up 
+instantly, it is because the fewest moves is still being calculated and will complete shortly. When
+you are ready to leave, press any key and you will be returned to the main menu.
+
+ex.
 ---------------------
 |   1  |   2  |   3  |
 ---------------------
@@ -50,13 +71,54 @@ ex. after solving a 3 x 3 board
 |   7  |   8  |   0  |
 ---------------------
 
-moves used: 26
-moves needed: 12
+moves used: 52
+moves needed: 26
+Time: 12 seconds
 
-If you wish to leave the program at any time, pressing the enter button will let you leave.
-The program is currently still in progress, so updates to the github repository will be happening
-frequently. It is recommended that you check this document after each update for any new features,
-requirements, or changes.
+Press any key to exit
 
 
-Please Enjoy!!
+
+_______________________________________________________________________________________________________________
+CALCULATE SOLVABLE PERMUTATIONS:
+
+when you choose this option on the main menu, a bar graph will be created showing the number of possible
+3 x 3 boards separated by how many moves away from being solved they are. This takes a long time to compute,
+so expect some delay in the data being displayed. After the entire graph is displayed, and you wish to leave,
+press any key, and you will be returned to the main menu.
+
+
+_______________________________________________________________________________________________________________
+STATISTICS:
+
+As you play this game, we save the number of moves and the time each game takes. Pressing the STATISTICS button will
+let you see this data. You will be presented with a new menu similar to the PLAY 8PUZZLE menu. Using arrow keys to
+navigate, you can choose the height and width of a board. By pressing the SHOW STATS button, you get past data 
+of boards this size. 
+
+ex.
+------------------------------
+|LENGTH:       +             |
+|WIDTH:        3             |
+|SHOW STATS    -             |
+------------------------------
+
+If you don't have any statistics for a specific board size yet, the program will tell you this. If you do have
+past statistics, the program will show the average number of moves and time, and the ten most recent games stats.
+When you wish to leave, press any key.
+
+ex.
+
+RECENT GAMES:
+
+Average moves: 30 Average time: 7 seconds
+
+ 1: moves needed:  30    time:     7 seconds
+Press any key to exit
+
+
+
+
+___________________________________________________________________________________________________
+
+Thats all you need to know, please enjoy the game!! Press enter to return to the main menu.

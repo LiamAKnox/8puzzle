@@ -1,3 +1,6 @@
+#ifndef D588755B_77DC_46A4_8346_06429083DD98
+#define D588755B_77DC_46A4_8346_06429083DD98
+
 #include <stdbool.h>
 #include "8puzzle.h"
 
@@ -41,3 +44,6 @@ void queue_cat(struct queue *dest, struct queue *add);
 //queue_clone(q) creates and returns a duplicate of *q
 struct queue *queue_clone(struct queue *q);
 
+
+
+#endif /* D588755B_77DC_46A4_8346_06429083DD98 */

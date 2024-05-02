@@ -1,3 +1,5 @@
+#ifndef C3475F25_FACE_4F57_9771_7B7460E313EC
+#define C3475F25_FACE_4F57_9771_7B7460E313EC
 #include <stdbool.h>
 
 
@@ -49,3 +51,6 @@ int get_moves(struct Astar_node *node);
 
 //get_distance(node) returns the heuristic value stored in *node
 int get_distance(struct Astar_node *node);
+
+
+#endif /* C3475F25_FACE_4F57_9771_7B7460E313EC */

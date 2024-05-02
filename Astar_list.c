@@ -56,11 +56,9 @@ struct Astar_node *list_remove_smallest(struct Astar_list *list) {
     assert(list->len > 0);
     struct Astar_node *smallest = *(list->data);
     int idx = 0;
-    int test = smallest->moves + smallest->distance;
     for (int i = 1; i < list->len; i++) {
         if ((*(list->data + i))->moves +  (*(list->data + i))->distance < smallest->moves + smallest->distance) {
             smallest = *(list->data + i);
-            test = (*(list->data + i))->moves +  (*(list->data + i))->distance;
             idx = i;
         }
     }

@@ -1,3 +1,5 @@
+#ifndef A31E2EFC_C5C3_4935_ADA1_315B7D3A5B90
+#define A31E2EFC_C5C3_4935_ADA1_315B7D3A5B90
 #include "queueADT.h"
 #include <stdbool.h>
 
@@ -45,3 +47,6 @@ int A_star(int layout);
 //heuristic_calc(layout) finds the heuristic value of a board used in the A_star search
 //it is the sum of all tiles' manhattan distances from their solved position
 int heuristic_calc(int layout);
+
+
+#endif /* A31E2EFC_C5C3_4935_ADA1_315B7D3A5B90 */
