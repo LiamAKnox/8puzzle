@@ -2,10 +2,11 @@
 **************************************************************************
 
 8PUZZLE uses ncurses:
-this will need to be installed in your linux terminal, to do so type: 
+this will need to be installed in your linux terminal. To do so type: 
 sudo apt-get install libncurses5-dev libncursesw5-dev
 
-after you have this installed, simply run the program by and enjoy.
+after you have this installed, simply run the program by using the Makefile's make command
+and then ./myprogram
 please keep the terminal window as large as possible when you run to prevent formatting issues
  
 

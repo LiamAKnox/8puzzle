@@ -1,26 +1,27 @@
 *******************************************8PUZZLE********************************************
 **********************************************************************************************
 
-
-After running the program, you will be presented with a window that lets you choose what you
-wish to do. You have the option to play the 8puzzle, calculate how many solvable boards there
-are on a 3 x 3 board, read the instructions - which you are currently doing -, show past
-statistics, and quit. 
+______________________________________________________________________________________________
+MAIN MENU:
+After running the program, a window will be displayed that lets gives users the option to
+play the 8puzzle, calculate how many solvable boards there are on a 3 x 3 board, read the 
+instructions (which you are currently doing), show past statistics, or quit. This menu, along
+with all other menus, is navigated with the up and down arrows and enter key.
 
 ______________________________________________________________________________________________
 PLAY 8PUZZLE:
 
-If you choose to play the 8puzzle on the main menu, you will be shown a new menu that allows
-you to customize the puzzle. This menu can be navigated with the arrow keys. The up and down
-arrow keys will let scroll between the options, and by clicking the right arrow key, you can
-access each options values. After you have accessed the option you wish to change, you can use
-the up and down arrow keys to change the values. When you are done changing the value, click
-the enter button or left arrow key to return to the list of options. When you have customized
-it to your liking, you can move to the PLAY button and press enter to start. If at any time you
-wish to leave this menu, move to the BACK button and press enter. One important customizable 
-option is the ALGORITHM. This option lets you choose how the program searches for the best solution
-to the puzzle that is created. This feature is only applicable for 3 x 3 boards. Currently, the 
-program only supports height and width between 3-11.
+If PLAY 8PUZZLE is selected from the main menu, a new menu is displayed to customize the puzzle.
+The puzzle has three customizable features, the height, width and algorithm. Height and width
+describe the size of the puzzle created, with the standard being 3 x 3, and the maximum being
+11 x 11. It is recommend that beginners start with the 3 x 3 board. The algorithm describes 
+how the program will calculate the fewest moves needed to solve the puzzle, and is only applicable
+to 3 x 3 boards. They will all produce the same answer however, they all offer different speeds,
+and memory efficiency (for more information, geeksforgeeks.org has explanations of each search
+algorithm). To change the value of an option, press the right arrow key and use the up and down
+arrow keys to change the value. To return press enter or the left arrow key. The PLAY button will
+start the puzzle with the given parameters, and the BACK button will return to the main menu.
+
 ex.
 --------------------------------------------------
 |1. HEIGHT:         Breadth First Search         |
@@ -30,10 +31,11 @@ ex.
 |5. BACK                                         |
 --------------------------------------------------
 
-
-Following this, the program will show you a board, and accept arrow key inputs to shift the tiles
-each arrow key corresponds to its direction, sliding the tile adjacent to the '0' in the arrow's direction.
-At any moment you can press the enter key, and you will be returned to the main menu
+After clicking the play button, a board will be created according to the chosen parameters, and 
+accept arrow key inputs to shift the tiles each arrow key corresponds to its direction, 
+sliding the tile adjacent to the '0' in the arrow's direction. The generated board will only 
+ever be a solvable puzzle. At any moment the enter key will cause the program to return to 
+the main menu.
 
 ex.
 the up arrow would move the 7 up, swapping places with the 0:
@@ -45,7 +47,9 @@ the up arrow would move the 7 up, swapping places with the 0:
 |   1  |   7  |   8  |              |   1  |   0  |   8  |
 ---------------------               ---------------------
 
-your goal is to arrange these numbers in ascending order, with the '0' in the bottom right corner:
+
+The goal of the puzzle is to arrange the tiles in ascending order top to bottom, and left to
+right. The one exception is the '0' tile which must be in the bottom right corner.
 
 ex. the solution to the 3 x 3 board
 ---------------------
@@ -57,10 +61,11 @@ ex. the solution to the 3 x 3 board
 ---------------------
 
 
-After solving the puzzle, the program will display how many moves it took you to solve it, the fewest
-moves possible to solve it, and how long it took to solve the board. If these stats do not show up 
-instantly, it is because the fewest moves is still being calculated and will complete shortly. When
-you are ready to leave, press any key and you will be returned to the main menu.
+After solving the puzzle, the program will display how many moves it took to solve it, the fewest
+moves possible to solve it (if the option was selected), and how long it took to solve the board.
+If these stats do not show up instantly, it is because the fewest moves is still being calculated
+and will complete shortly. To leave, simply press any key and the program will return to the main
+menu.
 
 ex.
 ---------------------
@@ -82,32 +87,28 @@ Press any key to exit
 _______________________________________________________________________________________________________________
 CALCULATE SOLVABLE PERMUTATIONS:
 
-when you choose this option on the main menu, a bar graph will be created showing the number of possible
-3 x 3 boards separated by how many moves away from being solved they are. This takes a long time to compute,
-so expect some delay in the data being displayed. After the entire graph is displayed, and you wish to leave,
-press any key, and you will be returned to the main menu.
+This feature calculates how many solvable 3 x 3 boards exist, and creates a bar graph separated by the required 
+moves to solve the board. This feature does take a long time to compute, so expect some delay in the data being
+displayed. After the entire graph is displayed, press any key, and to return to the main menu.
 
 
 _______________________________________________________________________________________________________________
 STATISTICS:
 
-As you play this game, we save the number of moves and the time each game takes. Pressing the STATISTICS button will
-let you see this data. You will be presented with a new menu similar to the PLAY 8PUZZLE menu. Using arrow keys to
-navigate, you can choose the height and width of a board. By pressing the SHOW STATS button, you get past data 
-of boards this size. 
+The statistics of each game played (moves needed and time) is stored by the program. This feature on the main
+menu allows access to this data. A menu similar to the PLAY 8PUZZLE's menu is created, and accepts a height and
+width. Pressing the SHOW STATS button then displays the statistics of boards this size. It displays the average
+moves needed and time, as well as the 10 most recent games statistics. From there press any key to return
+to the main menu.
 
-ex.
+ex. STATISTICS menu
 ------------------------------
 |LENGTH:       +             |
 |WIDTH:        3             |
 |SHOW STATS    -             |
 ------------------------------
 
-If you don't have any statistics for a specific board size yet, the program will tell you this. If you do have
-past statistics, the program will show the average number of moves and time, and the ten most recent games stats.
-When you wish to leave, press any key.
-
-ex.
+ex. displayed statistics
 
 RECENT GAMES:
 

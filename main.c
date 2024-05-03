@@ -500,12 +500,12 @@ int main(void) {
                     strcat(page2, line);
                 }
             }
-            for (int i = 0; i < 34; i++) {
+            for (int i = 0; i < 31; i++) {
                 if (fgets(line, 200, fptr)) {
                     strcat(page3, line);
                 }
             }
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 31; i++) {
                 if (fgets(line, 200, fptr)) {
                     strcat(page4, line);
                 }
