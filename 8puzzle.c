@@ -5,11 +5,6 @@
 
 #include "8puzzle.h"
 
-const int UP = 65;
-const int DOWN = 66;
-const int RIGHT = 67;
-const int LEFT = 68;
-
 
 struct board {
     char *layout;
@@ -36,7 +31,7 @@ struct board *board_init(int len, int wid, int shift_cnt) {
 
     srand(time(NULL));
     for (int i = 0; i < shift_cnt; i++) {
-        int scramble = (rand() % 4) + UP;
+        int scramble = (rand() % 4) + KEY_DOWN;
         play_board(new_board, scramble);
     }
     
@@ -114,15 +109,16 @@ bool play_board(struct board *board, int input) {
     assert(board);
     int null_idx = get_null_idx(board);
 
-    if (input == UP && null_idx + board->wid < board->wid * board->len) {
+    if (input == KEY_UP && null_idx + board->wid < board->wid * board->len) {
         return tile_swap(board, board->wid, null_idx);
-    } else if (input == DOWN && null_idx - board->wid >= 0) {
+    } else if (input == KEY_DOWN && null_idx - board->wid >= 0) {
         return tile_swap(board, board->wid * -1, null_idx);
-    } else if (input == LEFT && (null_idx + 1) % board->wid != 0) {
+    } else if (input == KEY_LEFT && (null_idx + 1) % board->wid != 0) {
         return tile_swap(board, 1, null_idx);
-    } else if (input == RIGHT && null_idx % board->wid != 0) {
+    } else if (input == KEY_RIGHT && null_idx % board->wid != 0) {
         return tile_swap(board, -1, null_idx);
     }
+    
     return false;
 }
 

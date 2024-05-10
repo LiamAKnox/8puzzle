@@ -14,8 +14,6 @@
 
 
 
-//TODO: - Makefile
-
 
 //ensure_arrow() guarantees that a given input is a special character and the next getch() will 
 //give the 'important' character value, or returns a new line
@@ -350,9 +348,12 @@ void stat_UI(void) {
 
 }
 
+//FIXME:    - consider using a pad instead of a window for output to allow smaller terminal sizes to support the formatting
+//          -  if not above, at least replace printw with addnstr() with max x, so that formatting isn't ruined
+//TODO:     - add mouse events to menu and play 8puzzle
 
 int main(void) {
-    char input;
+    int input;
     int len = 3;
     int wid = 3;
     int moves_needed = -1;
@@ -360,6 +361,8 @@ int main(void) {
     
     //start ncurses:
     initscr();
+    resizeterm(50, 240);
+    keypad(stdscr, TRUE);
     WINDOW *menu = newwin(5, 40, 0, 0);
     refresh();
     box(menu, 0, 0);
@@ -409,7 +412,7 @@ int main(void) {
                 
 
                 //repeatedly asks for player's next move until solved or exits('\n'
-                if ((input = ensure_arrow()) == '\n') {
+                if ((input = getch()) == '\n') {
                     destroy_board(board);
                     clear();
                     refresh();
@@ -426,7 +429,7 @@ int main(void) {
                         refresh();
                         break;
                     }
-                    if ((input = ensure_arrow()) == '\n') {
+                    if ((input = getch()) == '\n') {
                         destroy_board(board);
                         clear();
                         refresh();
@@ -480,7 +483,7 @@ int main(void) {
             queue_destroy(q);//unsure of this line right now
             clear();
             refresh();
-
+            
         } else if (choice == 2) {//3. INSTRUCTIONS
             FILE *fptr;
             int page = 0;

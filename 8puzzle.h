@@ -3,11 +3,6 @@
 #include <stdbool.h>
 
 
-extern const int UP;
-extern const int DOWN;
-extern const int LEFT;
-extern const int RIGHT;
-
 struct board;
 
 //board_init(len, wid): creates a board struct for the 8puzzle with the given height and width

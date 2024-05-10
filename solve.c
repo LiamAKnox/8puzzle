@@ -50,7 +50,7 @@ void permutation_calc(char min, char max, int layout, int cur, int next, char de
         }
 
         for (int i = 0; i < 4; i++) {
-            if (add_new(q, next_q, layout, UP + i, deep, min)) {
+            if (add_new(q, next_q, layout, KEY_DOWN + i, deep, min)) {
                 next++;
             }
         }
@@ -89,7 +89,7 @@ int brute_solve(int layout, int cur, int next, char deep,  struct queue *q) {
         }
 
         for (int i = 0; i < 4; i++) {
-            if (add_new(q, next_q, layout, UP + i, deep, 0)) {
+            if (add_new(q, next_q, layout, KEY_DOWN + i, deep, 0)) {
                 next++;
             }
         }
@@ -128,18 +128,18 @@ bool DFS_maxed(int layout, char deep, char max_deep, char prev) {
 
     for (int i = 0; i < 4; i++) {
         struct board* board = int_to_3x3(layout);
-        if (UP + i == prev) {
+        if (i == prev) {
              destroy_board(board);
              continue;
         }
-        if (play_board(board, UP + i)) {
+        if (play_board(board, KEY_DOWN + i)) {//down = 0402, up= 0403  left: 0404 right = 0405
             int reverse;
             if (i == 0 || i == 2) {
                 reverse = 1;
             } else {
                 reverse = -1;
             }
-            if (DFS_maxed(board_to_int(board), deep + 1, max_deep, UP + i + reverse)) {
+            if (DFS_maxed(board_to_int(board), deep + 1, max_deep, i + reverse)) {
                 destroy_board(board);
                 return true;
             }
@@ -167,7 +167,7 @@ int A_star(int layout) {
         list_add(closed, cur_node);//adds this node to the closed list
         for (int i = 0; i < 4; i++) {//this should add all new nodes
             struct board *cur_board = int_to_3x3(get_layout(cur_node));//turns node into a board
-            play_board(cur_board, UP + i);//attempts a move on the board
+            play_board(cur_board, KEY_DOWN + i);//attempts a move on the board
             int new_layout = board_to_int(cur_board);
             destroy_board(cur_board);
             if (new_layout == 123456780) {//if new board solved return moves required

@@ -3,7 +3,7 @@
 
 ______________________________________________________________________________________________
 MAIN MENU:
-After running the program, a window will be displayed that lets gives users the option to
+After running the program, a window will be displayed that gives users the option to
 play the 8puzzle, calculate how many solvable boards there are on a 3 x 3 board, read the 
 instructions (which you are currently doing), show past statistics, or quit. This menu, along
 with all other menus, is navigated with the up and down arrows and enter key.
@@ -12,9 +12,9 @@ ________________________________________________________________________________
 PLAY 8PUZZLE:
 
 If PLAY 8PUZZLE is selected from the main menu, a new menu is displayed to customize the puzzle.
-The puzzle has three customizable features, the height, width and algorithm. Height and width
+The puzzle has three customizable features, height, width and algorithm. Height and width
 describe the size of the puzzle created, with the standard being 3 x 3, and the maximum being
-11 x 11. It is recommend that beginners start with the 3 x 3 board. The algorithm describes 
+11 x 11. It is recommended that beginners start with the 3 x 3 board. The algorithm describes 
 how the program will calculate the fewest moves needed to solve the puzzle, and is only applicable
 to 3 x 3 boards. They will all produce the same answer however, they all offer different speeds,
 and memory efficiency (for more information, geeksforgeeks.org has explanations of each search
@@ -64,7 +64,7 @@ ex. the solution to the 3 x 3 board
 After solving the puzzle, the program will display how many moves it took to solve it, the fewest
 moves possible to solve it (if the option was selected), and how long it took to solve the board.
 If these stats do not show up instantly, it is because the fewest moves is still being calculated
-and will complete shortly. To leave, simply press any key and the program will return to the main
+and will be completed shortly. To leave, simply press any key and the program will return to the main
 menu.
 
 ex.
@@ -95,10 +95,10 @@ displayed. After the entire graph is displayed, press any key, and to return to 
 _______________________________________________________________________________________________________________
 STATISTICS:
 
-The statistics of each game played (moves needed and time) is stored by the program. This feature on the main
+The statistics of each game played (moves needed and time) are stored by the program. This feature on the main
 menu allows access to this data. A menu similar to the PLAY 8PUZZLE's menu is created, and accepts a height and
 width. Pressing the SHOW STATS button then displays the statistics of boards this size. It displays the average
-moves needed and time, as well as the 10 most recent games statistics. From there press any key to return
+moves needed and time, as well as the 10 most recent games' statistics. From there press any key to return
 to the main menu.
 
 ex. STATISTICS menu
@@ -122,4 +122,4 @@ Press any key to exit
 
 ___________________________________________________________________________________________________
 
-Thats all you need to know, please enjoy the game!! Press enter to return to the main menu.
+That's all you need to know, please enjoy the game!! Press enter to return to the main menu.
