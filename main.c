@@ -14,21 +14,6 @@
 
 
 
-
-//ensure_arrow() guarantees that a given input is a special character and the next getch() will 
-//give the 'important' character value, or returns a new line
-//effects: accepts inputs, may exit the program
-int ensure_arrow() {
-    char input;
-    while ((input = getch()) != 27) {
-        if (input == '\n') {
-            return 10;
-        }
-    }
-    getch();
-    return getch();
-}
-
 //create_menu(choices, num_choices, star_y) creates a simple menu on a window
 //with choices as the strings on each line 
 //effects: prints to window
