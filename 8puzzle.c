@@ -82,7 +82,11 @@ void print_board(struct board *board) {
     for (int i = 0; i < board->len; i++) {
         printw("|");
         for (int j = 0; j < board->wid; j++) {
-            printw("%4d  |", *(board->layout + (i * board->wid + j)));
+            if (*(board->layout + (i * board->wid + j)) == 0) {
+                printw("      |");
+            } else {
+                printw("%4d  |", *(board->layout + (i * board->wid + j)));
+            }
         }
         printw("\n");
         for (int j = 0; j < board->wid; j++) {

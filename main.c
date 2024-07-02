@@ -304,7 +304,7 @@ void stat_UI(void) {
             }   
             count--;
             printw("RECENT GAMES:\n\n");
-            int avg_time = 0;
+            float avg_time = 0;
             int avg_moves = 0;
             for (int i = 0; i < count + 1; i++) {
                  
@@ -314,7 +314,7 @@ void stat_UI(void) {
            
             avg_moves /= (count + 1);
             avg_time /= (count + 1);
-            printw("Average moves: %d Average time: %d seconds\n\n", avg_moves, avg_time);
+            printw("Average moves: %d Average time: %.2f seconds\n\n", avg_moves, avg_time);
             for (int i = 0; i < 10; i++) {
                 
                 printw("%2d: moves needed: %5d    time: %5d seconds\n", i + 1, moves_needed[count], time_needed[count]);
