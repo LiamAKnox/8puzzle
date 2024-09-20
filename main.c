@@ -55,6 +55,9 @@ int create_menu(char **choices, int num_choices, int start_y) {
             if (move == 10) {
                 return highlight;
             }
+            if(move >= '0' && move <= '5') {//returns proper highlight if its corresponding number is chosen
+                return (move - '1');
+            }
         
     }
 
@@ -178,19 +181,22 @@ bool play_puzzle_UI(int *len, int *wid, int *alg) {
         } else if (move == KEY_LEFT && side == 1) {
             side = 0;
             highlight = return_to;
-        } else if (move == 10) {//enter key
+        } else if (move == 10 || move == '4' || move == '5') {//enter key
             if (side == 1) {
                 side = 0;
                 highlight = return_to;
-            } else if (highlight == 3) {//play
+            } else if (highlight == 3 || move - '0' == 4) {//play
                 if (*len != 3 || *wid != 3) {
                     *alg = 3;
                 }
                 return true;
-            } else if (highlight == 4) {
+            } else if (highlight == 4 || move - '0' == 5) {
                 return false;
-            }
-        }
+            } 
+        }else if (move >= '0' && move <= '3') {
+            highlight = move - '1';
+            side = 0;
+        } 
     }
     
 }
@@ -366,7 +372,7 @@ int main(void) {
             len = 3;
             wid = 3;
             if (play_puzzle_UI(&len, &wid, &alg)) {
-                struct board *board = board_init(len, wid, 2000);
+                struct board *board = board_init(len, wid, 200 * len * wid);
                 int layout = board_to_int(board);   
 
                 if (pipe(fd) == -1) {
