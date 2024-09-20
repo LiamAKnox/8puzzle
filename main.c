@@ -69,8 +69,8 @@ bool play_puzzle_UI(int *len, int *wid, int *alg) {
     assert(wid);
     assert(alg);
     char *options[15] = {"", "           +", "", "           -", "",
-                            "Breadth First Search", 
                             "A* Search",
+                            "Breadth First Search", 
                             "Iterative Deepening Search",
                             "Do Not Calculate",
                             "", "", "", "", "", ""};
@@ -376,9 +376,10 @@ int main(void) {
                 int id = fork();
                 if (id == 0) {//solves created board
                     if (alg == 0) {
-                        moves_needed = brute_solve(layout, 1, 0, 0, q);
-                    } else if (alg == 1) {
                         moves_needed = A_star(layout);
+                        
+                    } else if (alg == 1) {
+                        moves_needed = brute_solve(layout, 1, 0, 0, q);
                     } else if (alg == 2) {
                         moves_needed = deepening_solve(layout);
                     }
