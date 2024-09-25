@@ -12,332 +12,19 @@
 #include "queueADT.h"
 #include "solve.h"
 
+//#include <mysql.h>;
 
 
-//create_menu(choices, num_choices, star_y) creates a simple menu on a window
-//with choices as the strings on each line 
-//effects: prints to window
-//requires: num_choices and start_y > 0, choices must have length of num_choices
-int create_menu(char **choices, int num_choices, int start_y) {
-    assert(num_choices > 0);
-    assert(start_y >= 0);
-    assert(choices);
-
-    WINDOW *menu = newwin(num_choices + 2, 40, start_y, 0);
-    box(menu, 0, 0);
-
-    keypad(menu, true);
-    noecho();
-    curs_set(0);
-
-    int move;
-    int highlight = 0;
-    while (true) {
-        for (int i = 0; i < num_choices; i++) {
-            if (i == highlight) {
-                wattron(menu, A_REVERSE);
-            }
-                mvwprintw(menu, i + 1, 1, "%s", choices[i]);
-                wattroff(menu, A_REVERSE);
-            }
-            move = wgetch(menu);
-
-            if (move == KEY_UP) {
-                if (highlight != 0) {
-                    highlight--;
-                }
-            } else if (move == KEY_DOWN) {
-                if (highlight != num_choices - 1) {
-                    highlight++;
-                }
-            } 
-
-            if (move == 10) {
-                return highlight;
-            }
-            if(move >= '0' && move <= '5') {//returns proper highlight if its corresponding number is chosen
-                return (move - '1');
-            }
-        
-    }
-
-}
-
-
-//play_puzzle_UI(len, wid, alg) creates a menu to let the user decide 
-//the length width and algorithm used to calculate efficient moves
-//returns true if the user wishes to play the 8puzzle, and false if they want to quit
-bool play_puzzle_UI(int *len, int *wid, int *alg) {
-    assert(len);
-    assert(wid);
-    assert(alg);
-    char *options[15] = {"", "           +", "", "           -", "",
-                            "A* Search",
-                            "Breadth First Search", 
-                            "Iterative Deepening Search",
-                            "Do Not Calculate",
-                            "", "", "", "", "", ""};
-    char *choices[5] = {"1. HEIGHT: ", "2. WIDTH: ", "3. ALGORITHM: ","4. PLAY", "5. BACK"};
-    
-    WINDOW *menu = newwin(7, 50, 0, 0);
-    box(menu, 0, 0);
-
-    keypad(menu, true);
-    noecho();
-    curs_set(0);
-
-    int move;//represents arrow key inputs
-    int highlight = 0;//represents which row to highlight
-    int side = 0;//represents if you are on left(0) or right(1) side
-    int skip = 0;//skips to correct strings in array
-    int return_to = 0;//tells right side where to go when returning to left side
+#include "statUI.h"
+#include "customizeUI.h"
+#include "mainMenu.h"
+#include "loginPage.h"
 
 
 
-    while (true) {
-        box(menu, 0, 0);
-
-        if (highlight < 2 && side == 0) {//skip = 0 -> height or width
-            skip = 0;
-        } else if (highlight == 2 && side == 0) {//skip = 1 -> Algorithm
-            skip = 1;
-        } else if (side == 0) {//skip = 2 -> Play/Back
-            skip = 2;
-        }
-        for (int i = 0; i < 5; i++) {
-            if (i == highlight && side == 0) {//highlights and writes to left side of menu
-                wattron(menu, A_REVERSE);
-            } 
-            mvwprintw(menu, i + 1, 1, "%s", choices[i]);
-            wattroff(menu, A_REVERSE);
-
-            //writes to right side of menu
-            mvwprintw(menu, i + 1, 20, "%s", options[i + 5 * skip]);
-            wattroff(menu, A_REVERSE);
-        }
-
-        if (side == 1) {//preps highlighting for printing height/width
-            wattron(menu, A_REVERSE);
-        }
-
-        if (skip == 0 && ((highlight == 0 && side == 0) || (return_to == 0 && side == 1))) {//if on height, prints height
-            mvwprintw(menu, 3, 31, "%d", *len);
-        } else if (skip == 0 && ((highlight == 1 && side == 0) || (return_to == 1 && side == 1))) {//if on width, prints width
-            mvwprintw(menu, 3, 31, "%d", *wid);
-        }
-
-        if (skip == 1) {//ensures proper algorithm is highlighted regardless of side
-            wattron(menu, A_REVERSE);
-            mvwprintw(menu, *alg + 1, 20, "%s", options[*alg +  5]);
-        }
-         wattroff(menu, A_REVERSE);
-
-        if (skip == 2) {
-            mvwprintw(menu, 1, 20, "%d", *len);
-            mvwprintw(menu, 2, 20, "%d", *wid);
-            if (*len == 3 && *wid == 3) {
-                mvwprintw(menu, 3, 20, "%s", options[*alg +  5]);
-            } else {
-                mvwprintw(menu, 3, 20, "board must be 3x3 for solving");
-            }
-        }
-        
-
-        move = wgetch(menu);
-
-        wclear(menu);
-        wrefresh(menu);
-        refresh();
-        if (move == KEY_UP && highlight != 0) {//up arrow pressed with an allowed location
-            if (side == 0) {//left side
-                highlight--;
-            } else if (skip == 1) {//on algorithm right side
-                (*alg)--;
-                highlight--;
-            } else if (return_to == 0 && *len < 11) {//(implicit skip == 0, since only skip == 1 or 0 get to side = 1)
-                (*len)++;
-            } else if (return_to == 1 && *wid < 11) {
-                (*wid)++;
-            }
-        } else if (move == KEY_DOWN && highlight != 4) {
-            if (side == 0) {
-                highlight++;
-            } else if (skip == 1) {//on algorithm right side
-                (*alg)++;
-                highlight++;
-            } else if (return_to == 0 && *len > 3) {//(implicit skip == 0, since only skip == 1 or 0 get to side = 1)
-                (*len)--;
-            } else if (return_to == 1 && *wid > 3) {
-                (*wid)--;
-            }
-        } else if(move == KEY_RIGHT && side == 0 && skip < 2) {
-            side = 1;
-            return_to = highlight;
-            if (skip == 0) {
-                highlight = 2;
-            } else if (skip == 1) {
-                highlight = *alg;
-            }
-        } else if (move == KEY_LEFT && side == 1) {
-            side = 0;
-            highlight = return_to;
-        } else if (move == 10 || move == '4' || move == '5') {//enter key
-            if (side == 1) {
-                side = 0;
-                highlight = return_to;
-            } else if (highlight == 3 || move - '0' == 4) {//play
-                if (*len != 3 || *wid != 3) {
-                    *alg = 3;
-                }
-                return true;
-            } else if (highlight == 4 || move - '0' == 5) {
-                return false;
-            } 
-        }else if (move >= '0' && move <= '3') {
-            highlight = move - '1';
-            side = 0;
-        } 
-    }
-    
-}
-
-//stat_UI() creates a menu for the statistics option. lets users choose height and width
-//and then data on that board size is revealed
-void stat_UI(void) {
-    WINDOW *menu = newwin(5, 30, 0, 0);
-
-    char *choices[3] = {"LENGTH:", "WIDTH:", "SHOW STATS"};
-    char *options[6] = {"+", "", "-", " ", " ", " "};
-
-    int move;
-    int side = 0;
-    int highlight = 0;
-    int return_to = 0;
-    int len = 3;
-    int wid = 3;
-    int skip = 0;
 
 
 
-    keypad(menu, true);
-    noecho();
-    curs_set(0);
-
-    while (true) {
-        if (highlight < 2) {
-            skip = 0;
-        } else {
-            skip = 1;
-        }
-
-        box(menu, 0, 0);
-        for (int i = 0; i < 3; i++) {
-            if (i == highlight && side == 0) {
-                wattron(menu, A_REVERSE);
-            }
-            mvwprintw(menu, i + 1, 1, "%s", choices[i]);//prints left side of menu
-            wattroff(menu, A_REVERSE);
-
-            mvwprintw(menu, i + 1, 15, "%s", options[i + 3 * skip]);//prints right side of menu
-        }
-
-        if (side == 1 && skip == 0) {//highlights right side if needed
-            wattron(menu, A_REVERSE);
-        }
-
-        if (skip == 0 && ((highlight == 0 && side == 0) || (return_to == 0 && side == 1))) {
-            mvwprintw(menu, 2, 15, "%d", len);
-        } else if (skip == 0){
-            mvwprintw(menu, 2, 15, "%d", wid);
-        } else {//skip == 1
-            mvwprintw(menu, 1, 15, "%d", len);
-            mvwprintw(menu, 2, 15, "%d", wid);
-        }
-        wattroff(menu, A_REVERSE);
-        
-
-        move = wgetch(menu);
-
-        if (move == KEY_UP && highlight > 0) {
-            if (side == 0) {
-                highlight--;
-            } else if (return_to == 0 && len < 10) {//inc height 
-                len++;
-            } else if (wid < 10){//inc width
-                wid++;
-            }
-        } else if (move == KEY_DOWN && highlight < 2) {
-            if (side == 0) {
-                highlight++;
-            } else if (return_to == 0 && len > 3) {
-                len--;
-            } else if (wid > 3) {
-                wid--;
-            }
-        } else if (move == KEY_RIGHT && side == 0 && skip == 0) {
-            side = 1;
-            return_to = highlight;
-            highlight = 1;
-        } else if ((move == KEY_LEFT || move == 10) && side == 1) {
-            side = 0;
-            highlight = return_to;
-        } else if (move == 10 && highlight == 2) {
-            wclear(menu);
-            wrefresh(menu);
-            char file_name[11];
-            sprintf(file_name, "%dx%dStats", len, wid);
-            FILE *fptr;
-            if (!(fptr = fopen(file_name, "r"))) {
-                printw("You have no previous games of that size: \n");
-                printw("Press any key to exit\n");
-                getch();
-                return;
-            }
-
-            int *moves_needed = calloc(100, sizeof(char *));
-            int *time_needed = calloc(100, sizeof(int));
-
-
-            int count = 0;
-            int max = 100;
-            while (fscanf(fptr, "%d %d", &time_needed[count], &moves_needed[count]) == 2) {
-                count++;
-                if (count == max) {
-                    max *=2;
-                    moves_needed = realloc(moves_needed, max * sizeof(int));
-                    time_needed = realloc(time_needed, max * sizeof(int));
-                } 
-            }   
-            count--;
-            printw("RECENT GAMES:\n\n");
-            float avg_time = 0;
-            int avg_moves = 0;
-            for (int i = 0; i < count + 1; i++) {
-                 
-                avg_moves += moves_needed[i];
-                avg_time += time_needed[i];
-            }
-           
-            avg_moves /= (count + 1);
-            avg_time /= (count + 1);
-            printw("Average moves: %d Average time: %.2f seconds\n\n", avg_moves, avg_time);
-            for (int i = 0; i < 10; i++) {
-                
-                printw("%2d: moves needed: %5d    time: %5d seconds\n", i + 1, moves_needed[count], time_needed[count]);
-                count--;
-                if (count == -1) {
-                    break;
-                }
-            }
-            printw("Press any key to exit\n");
-            getch();
-            clear();
-            refresh();
-            return;
-        }
-    }
-
-}
 
 //FIXME:    - consider using a pad instead of a window for output to allow smaller terminal sizes to support the formatting
 //          -  if not above, at least replace printw with addnstr() with max x, so that formatting isn't ruined
@@ -360,6 +47,28 @@ int main(void) {
     wrefresh(menu);
     keypad(menu, true);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
     while (true) {//loops menu screen
         struct queue *q = queue_init();
 
