@@ -116,6 +116,8 @@ int run_menu(struct MENU *menu) {
         } else if(returned_input > 0 && returned_input <= menu->num_of_options) {
             cur_option = returned_input - 1;
         } else if(returned_input == 10 && cur_item->menu_item_type == PUSH_BUTTON) {
+            werase(menu->window);
+            wrefresh(menu->window);
             return cur_option;
         }
     }
@@ -126,7 +128,6 @@ int run_menu(struct MENU *menu) {
 //push_button, menu_button, spinner_button, text_input
 #pragma region ADD_BUTTONS
 void add_push_button(struct MENU *menu, char *name) {
-    int test = sizeof(struct MENU_ITEM);
     struct MENU_ITEM *menu_item = malloc(sizeof(struct MENU_ITEM));
     if(menu_item == NULL) {
         exit(1);

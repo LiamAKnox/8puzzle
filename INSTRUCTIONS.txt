@@ -42,14 +42,14 @@ the up arrow would move the 7 up, swapping places with the 0:
 ---------------------               ---------------------
 |   2  |   4  |   3  |              |   2  |   4  |   3  |
 ---------------------               ---------------------        
-|   5  |   0  |   6  |    -->       |   5  |   7  |   6  |
+|   5  |      |   6  |    -->       |   5  |   7  |   6  |
 ---------------------               ---------------------
-|   1  |   7  |   8  |              |   1  |   0  |   8  |
+|   1  |   7  |   8  |              |   1  |      |   8  |
 ---------------------               ---------------------
 
 
 The goal of the puzzle is to arrange the tiles in ascending order top to bottom, and left to
-right. The one exception is the '0' tile which must be in the bottom right corner.
+right. The one exception is the blank tile which must be in the bottom right corner.
 
 ex. the solution to the 3 x 3 board
 ---------------------
@@ -57,7 +57,7 @@ ex. the solution to the 3 x 3 board
 ---------------------
 |   4  |   5  |   6  |
 ---------------------
-|   7  |   8  |   0  |
+|   7  |   8  |      |
 ---------------------
 
 
@@ -73,7 +73,7 @@ ex.
 ---------------------
 |   4  |   5  |   6  |
 ---------------------
-|   7  |   8  |   0  |
+|   7  |   8  |      |
 ---------------------
 
 moves used: 52
@@ -89,7 +89,7 @@ CALCULATE SOLVABLE PERMUTATIONS:
 
 This feature calculates how many solvable 3 x 3 boards exist, and creates a bar graph separated by the required 
 moves to solve the board. This feature does take a long time to compute, so expect some delay in the data being
-displayed. After the entire graph is displayed, press any key, and to return to the main menu.
+displayed. After the entire graph is displayed, press any key to return to the main menu.
 
 
 _______________________________________________________________________________________________________________

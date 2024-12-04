@@ -150,7 +150,7 @@ char **sub_options = calloc(10,sizeof(char *));
             len = 3;
             wid = 3;
             if (!play_puzzle_UI(&len, &wid, &alg)) {continue;}
-            
+            if(len != 3 || wid != 3) {alg = 3;}
             struct board *board = board_init(len, wid, 200 * len * wid);
             int layout = board_to_int(board); 
             
