@@ -14,12 +14,11 @@
 
 //#include <mysql.h>;
 
-
-#include "statUI.h"
-#include "customizeUI.h"
-#include "mainMenu.h"
+#include "menu.h"
+//#include "statUI.h"
+//#include "customizeUI.h"
 #include "loginPage.h"
-
+#include "modularUI.h"
 
 
 
@@ -36,16 +35,83 @@ int main(void) {
     int wid = 3;
     int moves_needed = -1;
     int fd[2];
+
+
+
+
+
+
+
+/*
+char **sub_options = calloc(10,sizeof(char *));
+
+    sub_options[0] = "option 1";
+    sub_options[1] = "option 2";
+    sub_options[2] = "option 3";
+    sub_options[3] = "option 4";
+    sub_options[4] = "option 5";
+    sub_options[5] = "option 6";
+    sub_options[6] = "option 7";
+    sub_options[7] = "option 8";
+    sub_options[8] = "option 9";
+
+
+    int *return_val = malloc(1 * sizeof(int));
+    int *return_val2 = malloc(1 * sizeof(int));
+    char *return_string = calloc(16, sizeof(char));
+    *return_val = 0;
+    *return_val2 = 3;
     
+
+
+
+    initscr();
+    resizeterm(50, 240);
+    keypad(stdscr, TRUE);
+
+    struct MENU *menu = new_menu("NEW MENU");
+
+    add_push_button(menu, "a new push button");
+    add_menu_button(menu, "a menu button", sub_options, return_val);
+    add_input_spinner(menu, "input spinner", 10, 1, return_val2);
+    add_text_input(menu, "text input", 5, 15, true, return_string);
+
+
+    run_menu(menu);
+
+    endwin();
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //while(true) {
+    /////int temp = wgetch();
+    //if (temp == KEY_LEFT) {break;}
+    //}
+    //return 0;
+/*
     //start ncurses:
     initscr();
     resizeterm(50, 240);
     keypad(stdscr, TRUE);
-    WINDOW *menu = newwin(5, 40, 0, 0);
+    //WINDOW *menu = newwin(5, 40, 0, 0);
     refresh();
     box(menu, 0, 0);
     wrefresh(menu);
     keypad(menu, true);
+*/
 
 
 
@@ -61,8 +127,9 @@ int main(void) {
 
 
 
-
-
+    initscr();
+    resizeterm(50, 240);
+    keypad(stdscr, TRUE);
 
 
 
@@ -72,105 +139,120 @@ int main(void) {
     while (true) {//loops menu screen
         struct queue *q = queue_init();
 
-        char *choices[5] = {"1. PLAY 8PUZZLE", "2. CALCULATE SOLVABLE PERMUTATIONS", "3. INSTRUCTIONS","4. STATISTICS", "5. EXIT"};
-        int choice = create_menu(choices, 5, 0);
+        int choice = main_menu();
+
+
+
         clear();
         refresh();
         if (choice == 0) {//1. PLAY 8PUZZLE
             int alg = 0;
             len = 3;
             wid = 3;
-            if (play_puzzle_UI(&len, &wid, &alg)) {
-                struct board *board = board_init(len, wid, 200 * len * wid);
-                int layout = board_to_int(board);   
+            if (!play_puzzle_UI(&len, &wid, &alg)) {continue;}
+            
+            struct board *board = board_init(len, wid, 200 * len * wid);
+            int layout = board_to_int(board); 
+            
+            //turn below into a pipe function  
+            {
+            if (pipe(fd) == -1) {
+                printf("an error occurred with opening the pipe");
+                return 1;
+            }
+            int id = fork();
+            if (id == 0) {//solves created board
+                if (alg == 0) {
+                    moves_needed = A_star(layout);
+                } else if (alg == 1) {
+                    moves_needed = brute_solve(layout, 1, 0, 0, q);
+                } else if (alg == 2) {
+                    moves_needed = deepening_solve(layout);
+                }
+                close(fd[0]);
+                write(fd[1], &moves_needed, sizeof(int));
+                close(fd[1]);
+                return 0;
+            }
+            }
+            
+            clear();
+            queue_destroy(q);
 
-                if (pipe(fd) == -1) {
-                    printf("an error occurred with opening the pipe");
-                    return 1;
-                }
-                int id = fork();
-                if (id == 0) {//solves created board
-                    if (alg == 0) {
-                        moves_needed = A_star(layout);
-                    } else if (alg == 1) {
-                        moves_needed = brute_solve(layout, 1, 0, 0, q);
-                    } else if (alg == 2) {
-                        moves_needed = deepening_solve(layout);
-                    }
-                    close(fd[0]);
-                    write(fd[1], &moves_needed, sizeof(int));
-                    close(fd[1]);
-                    return 0;
-                }
-                
-                
+            print_board(board);
+            refresh();
+            
+
+            //possible to turn below into a function?
+            //repeatedly asks for player's next move until solved or exits('\n'
+            if ((input = getch()) == '\n') {
+                destroy_board(board);
                 clear();
-                queue_destroy(q);
-
+                refresh();
+                continue;
+            }
+            time_t seconds = time(NULL);
+            while (input) {
+                clear();
+                
+                play_board(board, input);
                 print_board(board);
                 refresh();
-                
-
-                //repeatedly asks for player's next move until solved or exits('\n'
+                if (is_solved(board)) {
+                    refresh();
+                    break;
+                }
                 if ((input = getch()) == '\n') {
                     destroy_board(board);
                     clear();
                     refresh();
-                    continue;
+                    break;
                 }
-                time_t seconds = time(NULL);
-                while (input) {
-                    clear();
-                    
-                    play_board(board, input);
-                    print_board(board);
-                    refresh();
-                    if (is_solved(board)) {
-                        refresh();
-                        break;
-                    }
-                    if ((input = getch()) == '\n') {
-                        destroy_board(board);
-                        clear();
-                        refresh();
-                        continue;
-                    }
 
-                }
-                seconds = time(NULL) - seconds;
-
-                //outputs comparison between user's moves, and efficient move count
-                printw("\nmoves used: %d\n", get_count(board));
-                
-                if (alg != 3) {
-                    close(fd[1]);
-                    read(fd[0], &moves_needed, sizeof(int));
-                    close(fd[0]);
-                    flushinp();
-                    printw("moves needed: %d\n", moves_needed);
-                }
-                printw("Time: %d seconds\n", (int)seconds);
-                printw("\n");
-
-                char file_name[11];
-                sprintf(file_name, "%dx%dStats", len, wid);
-                FILE *fptr;
-                fptr = fopen(file_name, "a");
-                char data[43];
-                sprintf(data, "%d %d\n", (int)seconds, get_count(board));//represents data as time then moves 
-                fputs(data, fptr);
-                fclose(fptr);
-
-
-
-                //frees data used by board
-                destroy_board(board);
-                printw("Press any key to exit\n");
-                getch();
-                clear();
-                refresh();
             }
+            if(input == '\n') {continue;}
+            seconds = time(NULL) - seconds;
 
+
+
+
+
+
+
+
+
+
+
+            //outputs comparison between user's moves, and efficient move count
+            printw("\nmoves used: %d\n", get_count(board));
+            
+            if (alg != 3) {
+                close(fd[1]);
+                read(fd[0], &moves_needed, sizeof(int));
+                close(fd[0]);
+                flushinp();
+                printw("moves needed: %d\n", moves_needed);
+            }
+            printw("Time: %d seconds\n", (int)seconds);
+            printw("\n");
+
+            char file_name[11];
+            sprintf(file_name, "%dx%dStats", len, wid);
+            FILE *fptr;
+            fptr = fopen(file_name, "a");
+            char data[43];
+            sprintf(data, "%d %d\n", (int)seconds, get_count(board));//represents data as time then moves 
+            fputs(data, fptr);
+            fclose(fptr);
+
+
+
+            //frees data used by board
+            destroy_board(board);
+            printw("Press any key to exit\n");
+            getch();
+            clear();
+            refresh();
         } else if (choice == 1) {//2. CALCULATE SOLVABLE PERMUTATIONS
             struct board *board = board_init(3, 3, 0);
             int layout = board_to_int(board);
