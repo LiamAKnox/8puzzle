@@ -12,7 +12,6 @@
 #include "queueADT.h"
 #include "solve.h"
 
-#include <mysql.h>
 
 #include "menu.h"
 #include "loginPage.h"
