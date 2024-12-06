@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include "modularUI.h"
-
+#include <stdlib.h>
 
 int main_menu();
 

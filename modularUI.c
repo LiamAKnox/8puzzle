@@ -118,12 +118,26 @@ int run_menu(struct MENU *menu) {
         } else if(returned_input == 10 && cur_item->menu_item_type == PUSH_BUTTON) {
             werase(menu->window);
             wrefresh(menu->window);
+            free(options);
             return cur_option;
         }
     }
 }
 
+void destroy_menu_item(struct MENU_ITEM *menu_item){
+    free(menu_item);
+}
 
+
+void destroy_menu(struct MENU *menu) {
+    for(int i = 0; i < num_of_options; ++i) {
+        destroy_menu_item(menu->menu_items[i]);
+    }
+    free(menu->menu_items);
+    delwin(menu->window);
+    free(menu);
+    menu = NULL;
+}
 
 //push_button, menu_button, spinner_button, text_input
 #pragma region ADD_BUTTONS
@@ -444,10 +458,3 @@ int string_input_menu_item(WINDOW *menu, char *option, int option_num, int max_l
     }
 }
 #pragma endregion 
-//25 is a reasonable length, so maybe make that password and username length limit
-//CRAZY IDEA, BEFORE CALC. PERMUTATIONS, CHECK MAX X AND Y AND WARN THEM TO INCREASE THE SIZE OF THEIR TERMINAL
-
-
-
-//THINGS I FORGOT LIKE A DUMBASS: RESIZE EACH TIME YOU ADD, OR MAYBE WHEN YOU RUN IT
-//REMOVING THE SUB_OPTIONS EACH TIME YOU CHANGE(clear to eol sort of thing, then box())

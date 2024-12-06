@@ -12,22 +12,12 @@
 #include "queueADT.h"
 #include "solve.h"
 
-//#include <mysql.h>;
+#include <mysql.h>
 
 #include "menu.h"
-//#include "statUI.h"
-//#include "customizeUI.h"
 #include "loginPage.h"
 #include "modularUI.h"
 
-
-
-
-
-
-//FIXME:    - consider using a pad instead of a window for output to allow smaller terminal sizes to support the formatting
-//          -  if not above, at least replace printw with addnstr() with max x, so that formatting isn't ruined
-//TODO:     - add mouse events to menu and play 8puzzle
 
 int main(void) {
     int input;
@@ -37,105 +27,12 @@ int main(void) {
     int fd[2];
 
 
-
-
-
-
-
-/*
-char **sub_options = calloc(10,sizeof(char *));
-
-    sub_options[0] = "option 1";
-    sub_options[1] = "option 2";
-    sub_options[2] = "option 3";
-    sub_options[3] = "option 4";
-    sub_options[4] = "option 5";
-    sub_options[5] = "option 6";
-    sub_options[6] = "option 7";
-    sub_options[7] = "option 8";
-    sub_options[8] = "option 9";
-
-
-    int *return_val = malloc(1 * sizeof(int));
-    int *return_val2 = malloc(1 * sizeof(int));
-    char *return_string = calloc(16, sizeof(char));
-    *return_val = 0;
-    *return_val2 = 3;
-    
-
-
-
-    initscr();
-    resizeterm(50, 240);
-    keypad(stdscr, TRUE);
-
-    struct MENU *menu = new_menu("NEW MENU");
-
-    add_push_button(menu, "a new push button");
-    add_menu_button(menu, "a menu button", sub_options, return_val);
-    add_input_spinner(menu, "input spinner", 10, 1, return_val2);
-    add_text_input(menu, "text input", 5, 15, true, return_string);
-
-
-    run_menu(menu);
-
-    endwin();
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //while(true) {
-    /////int temp = wgetch();
-    //if (temp == KEY_LEFT) {break;}
-    //}
-    //return 0;
-/*
-    //start ncurses:
-    initscr();
-    resizeterm(50, 240);
-    keypad(stdscr, TRUE);
-    //WINDOW *menu = newwin(5, 40, 0, 0);
-    refresh();
-    box(menu, 0, 0);
-    wrefresh(menu);
-    keypad(menu, true);
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     initscr();
     resizeterm(50, 240);
     keypad(stdscr, TRUE);
 
 
 
-
-    
-    
     while (true) {//loops menu screen
         struct queue *q = queue_init();
 

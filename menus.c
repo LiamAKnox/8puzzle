@@ -1,11 +1,13 @@
-#include "menu.h"
+#include "menus.h"
 int main_menu() {
     char *choices[5] = {"PLAY 8PUZZLE", "CALCULATE SOLVABLE PERMUTATIONS", "INSTRUCTIONS","STATISTICS", "EXIT"};
     struct MENU *main_menu = new_menu("MAIN MENU");
     for(int i = 0; i < 5; ++i) {
         add_push_button(main_menu, choices[i]);
     }
-    return run_menu(main_menu);
+    int return_val = run_menu(main_menu);
+    destroy_menu(main_menu);
+    return return_val;
 }
 
 
@@ -22,7 +24,9 @@ bool play_puzzle_UI(int *len, int *wid, int *alg) {
     add_input_spinner(puzzle_menu, choices[2], 11, 3, wid);
     add_menu_button(puzzle_menu, choices[3], alg_options, alg);
     add_push_button(puzzle_menu, choices[4]);
-    return run_menu(puzzle_menu) == 0;
+    bool return_val =  run_menu(puzzle_menu) == 0;
+    destroy_menu(puzzle_menu);
+    return return_val;
 }
 
 
@@ -37,7 +41,7 @@ void stat_UI() {
     add_input_spinner(stat_menu, choices[1], 11, 3, &len);
     add_input_spinner(stat_menu, choices[2], 11, 3, &wid);
     run_menu(stat_menu);
-
+    destroy_menu(stat_menu);
 
 
 
@@ -95,3 +99,5 @@ void stat_UI() {
             return;
         }
 }
+
+

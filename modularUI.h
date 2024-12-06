@@ -27,4 +27,8 @@ int string_input_menu_item(WINDOW *menu, char *option, int option_num, int max_l
 
 void clear_right_side(struct MENU *menu);
 
+void destroy_menu(struct MENU *menu);
+
+//void destroy_menu_item(struct MENU_ITEM *menu_item);
+
 #endif /* BF84332E_23FD_48F4_8CE0_367A563A54A5 */
