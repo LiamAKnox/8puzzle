@@ -2,7 +2,7 @@ EXEC = myprogram
 
 CC = clang
 
-CFLAGS = -std=c99 -g -Wall -lncurses -MMD ${OPT}
+CFLAGS = -std=c99 -g -O0 -Wall -lm -lncurses -MMD ${OPT}
 
 SRC = $(wildcard *.c)
 
