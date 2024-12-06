@@ -13,7 +13,7 @@
 #include "solve.h"
 
 
-#include "menu.h"
+#include "menus.h"
 #include "loginPage.h"
 #include "modularUI.h"
 
